@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 Stellar Soroban DApp — Full Stack Project
 
 A complete decentralized application (DApp) built using **Rust (Soroban smart contracts)** and a **React + Vite frontend**, deployed on the **Stellar Testnet**.
@@ -225,3 +226,99 @@ This project is open-source and free to use for learning purposes.
 ## 💡 Author
 
 Built as a hands-on project to learn **full-stack blockchain development using Stellar & Rust** 🚀
+=======
+# Stellar Split Bill dApp
+
+A Soroban-powered split bill app built for hackathon demos.
+
+## What It Does
+
+- Add shared expenses on-chain (`payer`, `amount`, `participants`)
+- Automatically maintain net balances per participant
+- Settle balances with wallet-signed transactions (Freighter)
+- Show latest expenses and balances from contract storage
+
+## Tech Stack
+
+- Smart Contract: Soroban (`Rust`, `soroban-sdk`)
+- Frontend: `React` + `Tailwind` + `Vite`
+- Wallet: `@stellar/freighter-api`
+- Network: Stellar Testnet
+
+## Demo Screenshots
+
+### Wallet + Dashboard
+![Wallet + Dashboard](docs/screenshots/01-wallet-dashboard.svg)
+
+### Add Expense
+![Add Expense](docs/screenshots/02-add-expense.svg)
+
+### Settle + Transaction Link
+![Settle + Tx Link](docs/screenshots/03-settle-tx-link.svg)
+
+## Local Run
+
+1. Build/deploy the contract from `contract/`.
+2. Set frontend env:
+   - `VITE_CONTRACT_ID`
+   - `VITE_SOROBAN_RPC_URL`
+   - `VITE_NETWORK_PASSPHRASE`
+   - `VITE_TX_EXPLORER_BASE`
+3. Run frontend:
+
+```powershell
+cd frontend
+npm.cmd install
+npm.cmd run dev
+```
+
+## Hackathon Test Script
+
+Use two Freighter testnet accounts:
+
+- `ADDR_A`
+- `ADDR_B`
+
+1. Connect as `ADDR_A`, add expense:
+   - payer: `ADDR_A`
+   - amount: `120`
+   - participants: `ADDR_A,ADDR_B`
+2. Switch wallet to `ADDR_B`, add expense:
+   - payer: `ADDR_B`
+   - amount: `30`
+   - participants: `ADDR_A,ADDR_B`
+3. Settle as `ADDR_B` to `ADDR_A`:
+   - first settle `20`
+   - then settle `25`
+
+Expected final net balances: both users return to `0`.
+
+## Deploy Frontend
+
+### Option A: Vercel
+
+```powershell
+cd frontend
+npm.cmd run build
+npx vercel login
+npx vercel --prod
+```
+
+Set env vars in Vercel project settings:
+
+- `VITE_CONTRACT_ID`
+- `VITE_SOROBAN_RPC_URL`
+- `VITE_NETWORK_PASSPHRASE`
+- `VITE_TX_EXPLORER_BASE`
+
+### Option B: Netlify
+
+```powershell
+cd frontend
+npm.cmd run build
+npx netlify login
+npx netlify deploy --prod --dir=dist
+```
+
+Set the same env vars in Netlify site settings.
+>>>>>>> 9869a52 (Initial commit with frontend and contract)

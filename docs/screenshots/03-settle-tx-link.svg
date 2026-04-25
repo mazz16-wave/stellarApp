@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#edfdf5"/>
+  <rect x="150" y="80" width="980" height="540" rx="18" fill="#ffffff" stroke="#d1fae5"/>
+  <text x="200" y="150" font-family="Sora, sans-serif" font-size="38" fill="#0f172a">Settlement Success</text>
+  <rect x="200" y="200" width="880" height="120" rx="14" fill="#ecfdf3" stroke="#86efac"/>
+  <text x="240" y="255" font-family="Manrope, sans-serif" font-size="28" fill="#14532d">Settlement recorded on-chain</text>
+  <rect x="200" y="350" width="880" height="90" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="240" y="405" font-family="Space Mono, monospace" font-size="24" fill="#065f46">Tx: abc123...def456</text>
+  <rect x="900" y="370" width="140" height="50" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="942" y="402" font-family="Manrope, sans-serif" font-size="20" fill="#334155">Copy</text>
+  <text x="200" y="580" font-family="Manrope, sans-serif" font-size="24" fill="#64748b">Placeholder screenshot: replace with real tx hash link capture.</text>
+</svg>

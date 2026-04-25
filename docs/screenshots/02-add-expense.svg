@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#eef6ff"/>
+  <rect x="180" y="70" width="920" height="580" rx="20" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="230" y="140" font-family="Sora, sans-serif" font-size="40" fill="#0f172a">Add Expense</text>
+  <rect x="230" y="190" width="820" height="70" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="230" y="285" width="820" height="70" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="230" y="380" width="820" height="140" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="230" y="545" width="220" height="60" rx="12" fill="#0f172a"/>
+  <text x="276" y="584" font-family="Manrope, sans-serif" font-size="24" fill="#ffffff">Add Expense</text>
+  <text x="230" y="645" font-family="Manrope, sans-serif" font-size="24" fill="#64748b">Placeholder screenshot: replace with real form capture.</text>
+</svg>
