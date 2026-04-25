@@ -1,8 +1,0 @@
-C:\Users\Mahasweta Sharma\Desktop\stellarProject1\contract\target\debug\deps\serde_with_macros-04244ce5e2e30035.d: C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\lib.rs C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\apply.rs C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\lazy_bool.rs C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\utils.rs
-
-C:\Users\Mahasweta Sharma\Desktop\stellarProject1\contract\target\debug\deps\serde_with_macros-04244ce5e2e30035.dll: C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\lib.rs C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\apply.rs C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\lazy_bool.rs C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\utils.rs
-
-C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\lib.rs:
-C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\apply.rs:
-C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\lazy_bool.rs:
-C:\Users\Mahasweta\ Sharma\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde_with_macros-3.12.0\src\utils.rs:
