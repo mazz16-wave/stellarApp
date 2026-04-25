@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SettleBalance({ wallet, onSettle }) {
   const [from, setFrom] = useState(wallet || "");
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
+
+  useEffect(() => {
+    if (wallet) setFrom(wallet);
+  }, [wallet]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -12,31 +16,29 @@ export default function SettleBalance({ wallet, onSettle }) {
   };
 
   return (
-    <form onSubmit={submit} className="space-y-3 rounded-2xl bg-slate-900 p-5 shadow">
-      <h2 className="text-lg font-semibold">Settle Balance</h2>
+    <form onSubmit={submit} className="glass-card card-hover space-y">
+      <h2>Settle Balance</h2>
       <input
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2"
+        className="input"
         placeholder="From (debtor)"
         value={from}
         onChange={(e) => setFrom(e.target.value)}
       />
       <input
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2"
+        className="input"
         placeholder="To (creditor)"
         value={to}
         onChange={(e) => setTo(e.target.value)}
       />
       <input
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2"
+        className="input"
         placeholder="Amount"
         type="number"
         min="1"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
-      <button className="w-full rounded-lg bg-emerald-600 py-2 font-medium hover:bg-emerald-500">
-        Settle via Wallet
-      </button>
+      <button className="btn btn-success btn-block">Settle via Wallet</button>
     </form>
   );
 }

@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddExpense({ wallet, onSubmit }) {
   const [payer, setPayer] = useState(wallet || "");
   const [amount, setAmount] = useState("");
   const [participants, setParticipants] = useState("");
+
+  useEffect(() => {
+    if (wallet) setPayer(wallet);
+  }, [wallet]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,16 +27,16 @@ export default function AddExpense({ wallet, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-2xl bg-slate-900 p-5 shadow">
-      <h2 className="text-lg font-semibold">Add Expense</h2>
+    <form onSubmit={handleSubmit} className="glass-card card-hover space-y">
+      <h2>Add Expense</h2>
       <input
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2"
+        className="input"
         placeholder="Payer public key"
         value={payer}
         onChange={(e) => setPayer(e.target.value)}
       />
       <input
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2"
+        className="input"
         placeholder="Amount (i64)"
         type="number"
         min="1"
@@ -40,15 +44,13 @@ export default function AddExpense({ wallet, onSubmit }) {
         onChange={(e) => setAmount(e.target.value)}
       />
       <textarea
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2"
+        className="input"
         placeholder="Participants (comma-separated Stellar public keys)"
         value={participants}
         onChange={(e) => setParticipants(e.target.value)}
       />
 
-      <button className="w-full rounded-lg bg-indigo-500 py-2 font-medium hover:bg-indigo-400">
-        Add Expense
-      </button>
+      <button className="btn btn-primary btn-block">Add Expense</button>
     </form>
   );
 }

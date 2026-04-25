@@ -1,9 +1,239 @@
 :root {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #e2e8f0;
+  background: #030712;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background: #020617;
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #1f2937 0%, #020617 45%, #020617 100%);
+}
+
+.page-shell {
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 2.5rem 1rem 2rem;
+  overflow: hidden;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.35;
+  z-index: 0;
+  animation: drift 8s ease-in-out infinite;
+}
+
+.bg-orb--one {
+  width: 240px;
+  height: 240px;
+  background: #6366f1;
+  top: -90px;
+  right: -40px;
+}
+
+.bg-orb--two {
+  width: 200px;
+  height: 200px;
+  background: #10b981;
+  bottom: 10%;
+  left: -60px;
+  animation-delay: 1s;
+}
+
+.hero-card,
+.glass-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(15, 23, 42, 0.76);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(2, 6, 23, 0.45);
+}
+
+.hero-card {
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.hero-subtitle {
+  margin-top: 0.5rem;
+  color: #cbd5e1;
+}
+
+.hero-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.pill {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  background: rgba(15, 23, 42, 0.9);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-text {
+  margin-top: 0.9rem;
+  font-size: 0.88rem;
+  color: #fcd34d;
+}
+
+.form-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-bottom: 1rem;
+}
+
+.glass-card {
+  padding: 1.1rem;
+}
+
+.card-hover {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.55);
+}
+
+.space-y > * + * {
+  margin-top: 0.65rem;
+}
+
+.input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  background: rgba(15, 23, 42, 0.65);
   color: #e2e8f0;
+  padding: 0.65rem 0.72rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: rgba(99, 102, 241, 0.95);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.btn {
+  border: 0;
+  color: white;
+  font-weight: 650;
+  padding: 0.6rem 0.95rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, #6366f1, #8b5cf6);
+}
+
+.btn-success {
+  background: linear-gradient(120deg, #10b981, #22c55e);
+}
+
+.muted-text {
+  margin: 0.7rem 0 0;
+  color: #94a3b8;
+  font-size: 0.92rem;
+}
+
+.balance-list {
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.balance-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.balance-user {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.83rem;
+}
+
+.badge {
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 0.22rem 0.55rem;
+  font-weight: 650;
+}
+
+.badge-positive {
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.badge-negative {
+  color: #fda4af;
+  background: rgba(244, 63, 94, 0.18);
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(18px) translateX(12px);
+  }
 }
