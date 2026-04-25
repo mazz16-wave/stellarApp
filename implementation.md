@@ -1,75 +1,55 @@
-# Stellar Split Bill dApp - Implementation Guide
+# implementation.md
 
-This project contains:
-- `contract/`: Soroban smart contract in Rust
-- `frontend/`: React + Tailwind app with Freighter wallet integration
+## Step 1: Install dependencies
 
-The app lets a payer add expenses for a group, calculates net balances on-chain, and records settlements through wallet-signed transactions.
-
-## Step 1: Install Dependencies
-
-Install:
-- Rust stable + `wasm32v1-none` target
+Install required tools:
+- Rust (stable)
 - Soroban CLI
 - Node.js 18+
-- Freighter browser extension
+- Freighter extension in Chrome
 
-```powershell
+```bash
+rustup update
 rustup target add wasm32v1-none
-
-rustc --version
-cargo --version
-soroban --version
+cargo install --locked stellar-cli
 node --version
 npm --version
+soroban --version
 ```
 
 ## Step 2: Setup Soroban CLI
 
-Create a key and add testnet alias:
-
-```powershell
-soroban keys generate dev --network testnet
-
-soroban network add testnet `
-  --rpc-url https://soroban-testnet.stellar.org `
+```bash
+soroban network add testnet \
+  --rpc-url https://soroban-testnet.stellar.org \
   --network-passphrase "Test SDF Network ; September 2015"
+
+soroban keys generate dev --network testnet
+soroban keys fund dev --network testnet
 ```
 
-Fund the key on testnet before deployment.
+## Step 3: Build contract
 
-## Step 3: Build Contract
-
-```powershell
+```bash
 cd contract
 soroban contract build
 ```
 
-Expected wasm:
-- `target/wasm32v1-none/release/split_bill_contract.wasm`
+## Step 4: Deploy contract
 
-## Step 4: Deploy Contract
-
-```powershell
+```bash
 cd contract
-
-soroban contract deploy `
-  --network testnet `
-  --source dev `
+soroban contract deploy \
+  --network testnet \
+  --source dev \
   --wasm target/wasm32v1-none/release/split_bill_contract.wasm
 ```
 
 Copy the returned contract ID.
 
-## Step 5: Setup Frontend
+## Step 5: Setup frontend
 
-```powershell
-cd frontend
-npm install
-Copy-Item .env.example .env
-```
-
-Set `frontend/.env`:
+From project root, create `.env`:
 
 ```env
 VITE_CONTRACT_ID=PASTE_DEPLOYED_CONTRACT_ID_HERE
@@ -77,38 +57,27 @@ VITE_SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
 VITE_NETWORK_PASSPHRASE=Test SDF Network ; September 2015
 ```
 
-## Step 6: Connect Wallet
+Install frontend dependencies:
 
-The frontend wallet flow uses:
-- `requestAccess()` for popup permissions
-- `getAddress()` to read wallet public key
-- `signTransaction()` to sign Soroban transactions
+```bash
+npm install
+```
 
-Use Freighter on testnet with a funded account.
+## Step 6: Connect wallet
 
-## Step 7: Run Project
+1. Install Freighter Chrome extension.
+2. Set network to Testnet.
+3. In the app, click **Connect Freighter**.
+4. Approve popup (triggered by `requestAccess()`).
+5. App reads public key via `getPublicKey()`.
 
-```powershell
-cd frontend
+## Step 7: Run project
+
+```bash
 npm run dev
 ```
 
-Open the local URL (usually `http://localhost:5173`), then:
-- connect wallet
-- add expense (`payer`, `amount`, `participants`)
-- check balances
-- settle via wallet-signed contract tx
-
-## Contract Methods
-
-- `add_expense(payer, amount, participants)`
-- `get_expenses()`
-- `get_balances()`
-- `settle_balance(from, to, amount)`
-- `version()`
-
-## Hackathon Notes
-
-- Amount is integer `i64`.
-- `amount` must be divisible by number of participants.
-- `settle_balance` records the settlement in contract state.
+Open local Vite URL (usually `http://localhost:5173`) and:
+- Add expense (payer, amount, participants)
+- Review balances
+- Settle with wallet signature using **Settle via Wallet**
