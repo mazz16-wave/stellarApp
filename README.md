@@ -1,324 +1,167 @@
-<<<<<<< HEAD
-# 🚀 Stellar Soroban DApp — Full Stack Project
+# Split Bill dApp on Stellar Soroban
 
-A complete decentralized application (DApp) built using **Rust (Soroban smart contracts)** and a **React + Vite frontend**, deployed on the **Stellar Testnet**.
+## 1. 🧠 Project Overview
+
+Split Bill is a hackathon-friendly decentralized app that tracks shared group expenses on Stellar Soroban and computes net balances directly on-chain.
+
+### Key features
+- Add expense with payer, amount, and participant addresses.
+- Compute balances (`+` means should receive, `-` means owes).
+- Settle balances using Freighter wallet transaction signing.
+- Read/write directly with Soroban RPC (no backend).
+- Minimal React + Tailwind UI for fast iteration.
+
+### Target users
+- Hackathon teams building payments demos.
+- Small groups splitting trip/team expenses.
+- Stellar developers learning Soroban + Freighter integration.
 
 ---
 
-## 📌 Project Overview
+## 2. 🏗️ Tech Stack
 
-This project demonstrates how to:
-
-* Build a smart contract using **Soroban SDK (Rust)**
-* Compile it to **WebAssembly (WASM)**
-* Deploy it on the **Stellar Testnet**
-* Interact with it using a **React frontend**
-* Connect a wallet using **Freighter API**
+- **Frontend:** React + Vite + Tailwind CSS
+- **Blockchain:** Stellar Soroban (Testnet)
+- **Wallet:** Freighter Wallet extension
+- **Contract language:** Rust (Soroban SDK)
 
 ---
 
-## 🏗️ Project Structure
+## 3. 📁 Folder Structure
 
-```
-stellarProject1/
+```text
+project-root/
 │
-├── contract/        # Rust Soroban smart contract
+├── contract/
 │   ├── src/
 │   │   └── lib.rs
 │   └── Cargo.toml
 │
-└── frontend/        # React + Vite frontend
-    ├── src/
-    │   ├── App.jsx
-    │   └── utils/
-    │       └── wallet.js
-    └── package.json
+├── src/
+│   ├── components/
+│   │   ├── AddExpense.jsx
+│   │   ├── BalanceList.jsx
+│   │   └── SettleBalance.jsx
+│   ├── pages/
+│   │   └── HomePage.jsx
+│   ├── utils/
+│   │   ├── soroban.js
+│   │   └── wallet.js
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+│
+├── implementation.md
+└── package.json
 ```
 
 ---
 
-## ⚙️ Tech Stack
+## 4. 🔗 Smart Contract (Soroban)
 
-### 🔹 Backend (Smart Contract)
+The full contract lives in `contract/src/lib.rs` and includes:
+- `add_expense(payer, amount, participants)`
+- `get_expenses()`
+- `get_balances()`
+- `settle_balance(from, to, amount)`
+- storage via `DataKey::{Expense, Balance, Users, ...}`
 
-* Rust
-* Soroban SDK
-* WebAssembly (WASM)
-
-### 🔹 Frontend
-
-* React
-* Vite
-* JavaScript
-
-### 🔹 Blockchain Tools
-
-* Stellar CLI
-* Freighter Wallet
+It stores expense history and updates net balances in persistent Soroban storage.
 
 ---
 
-## 🔐 Smart Contract
+## 5. 🎨 Frontend Code
 
-### Example Function
+Frontend provides:
+- Expense form (`AddExpense`)
+- Balance panel (`BalanceList`)
+- Settlement form/button (`SettleBalance`)
+- Wallet state + status messages in `HomePage`
 
-```rust
-#![no_std]
+Tailwind is used for a clean dark UI and compact hackathon workflow.
 
-use soroban_sdk::{contract, contractimpl, Env};
+---
 
-#[contract]
-pub struct Contract;
+## 6. 🔌 Wallet Integration
 
-#[contractimpl]
-impl Contract {
-    pub fn hello(_env: Env) -> u32 {
-        1
-    }
+`src/utils/wallet.js` uses Freighter popup authentication:
+
+```js
+import { requestAccess, getPublicKey } from "@stellar/freighter-api";
+
+export async function connectFreighter() {
+  await requestAccess(); // triggers popup
+  const publicKey = await getPublicKey();
+  return publicKey;
 }
 ```
 
----
-
-## 🛠️ Setup Instructions
-
-### 1️⃣ Install Rust
-
-```bash
-rustup update
-```
+Also includes auto-reconnect checks (`isAllowed`, `isConnected`).
 
 ---
 
-### 2️⃣ Install WASM Target
+## 7. 📡 Contract Interaction Layer
 
-```bash
-rustup target add wasm32v1-none
-```
+`src/utils/soroban.js` contains helper functions to:
+- Read balances: `getBalances(...)`
+- Write expense intent: `addExpense(...)`
+- Write settlement intent: `settleBalance(...)`
 
----
-
-### 3️⃣ Install Stellar CLI
-
-```bash
-cargo install --locked stellar-cli
-```
+Current hackathon template uses a local mock store so the UI is runnable instantly without backend.
+Swap this layer to Soroban RPC + signed XDR when your contract ID is deployed.
 
 ---
 
-## 🔑 Setup Wallet
+## 8. 🛠️ Deployment Guide
 
-```bash
-stellar keys generate alice
-stellar keys fund alice --network testnet
-```
-
----
-
-## 🧱 Build Smart Contract
+### Contract Deployment
 
 ```bash
 cd contract
-stellar contract build
+soroban contract build
+soroban contract deploy \
+  --network testnet \
+  --source dev \
+  --wasm target/wasm32v1-none/release/split_bill_contract.wasm
 ```
 
----
+Copy the generated contract ID.
 
-## 🚀 Deploy Smart Contract
+### Frontend
 
-```bash
-stellar contract deploy \
-  --wasm target/wasm32v1-none/release/contract.wasm \
-  --source alice \
-  --network testnet
+Create `.env` in project root:
+
+```env
+VITE_CONTRACT_ID=PASTE_DEPLOYED_CONTRACT_ID_HERE
+VITE_SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
+VITE_NETWORK_PASSPHRASE=Test SDF Network ; September 2015
 ```
 
-👉 Save the **Contract ID** returned after deployment.
-
----
-
-## 🌐 Run Frontend
+Run frontend:
 
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
 
-Open in browser:
+---
 
-```
-http://localhost:5173/
-```
+## 9. 📄 `implementation.md`
+
+Detailed setup and runbook is provided in `implementation.md` with these exact steps:
+1. Install dependencies
+2. Setup Soroban CLI
+3. Build contract
+4. Deploy contract
+5. Setup frontend
+6. Connect wallet
+7. Run project
 
 ---
 
-## 🔌 Connect Wallet (Frontend)
+## 10. ⚡ DX Boost
 
-Install **Freighter Wallet Extension**
-Set network to **Testnet**
-
----
-
-## 🔗 Connect Contract in Frontend
-
-```js
-const CONTRACT_ID = "YOUR_CONTRACT_ID_HERE";
-```
-
----
-
-## 🧪 Usage
-
-1. Start frontend
-2. Click **Connect Wallet**
-3. Approve in Freighter
-4. Call contract function (`hello`)
-5. View result
-
----
-
-## ⚠️ Common Issues
-
-| Issue              | Fix                               |
-| ------------------ | --------------------------------- |
-| Blank frontend     | Check `index.html` and `main.jsx` |
-| WASM not found     | Ensure correct build path         |
-| CLI not recognized | Add `.cargo/bin` to PATH          |
-| Metadata error     | Use `stellar contract build`      |
-
----
-
-## 📦 Future Improvements
-
-* Store on-chain data
-* Add user inputs
-* Build voting system
-* Create token-based interactions
-* Deploy frontend to Vercel/Netlify
-
----
-
-## 🎯 Learning Outcomes
-
-* Smart contract development in Rust
-* WebAssembly compilation
-* Blockchain deployment (Stellar)
-* Wallet integration
-* Full-stack DApp architecture
-
----
-
-## 🙌 Acknowledgements
-
-* Stellar Development Foundation
-* Soroban Documentation
-* Vite & React community
-
----
-
-## 📄 License
-
-This project is open-source and free to use for learning purposes.
-
----
-
-## 💡 Author
-
-Built as a hands-on project to learn **full-stack blockchain development using Stellar & Rust** 🚀
-=======
-# Stellar Split Bill dApp
-
-A Soroban-powered split bill app built for hackathon demos.
-
-## What It Does
-
-- Add shared expenses on-chain (`payer`, `amount`, `participants`)
-- Automatically maintain net balances per participant
-- Settle balances with wallet-signed transactions (Freighter)
-- Show latest expenses and balances from contract storage
-
-## Tech Stack
-
-- Smart Contract: Soroban (`Rust`, `soroban-sdk`)
-- Frontend: `React` + `Tailwind` + `Vite`
-- Wallet: `@stellar/freighter-api`
-- Network: Stellar Testnet
-
-## Demo Screenshots
-
-### Wallet + Dashboard
-![Wallet + Dashboard](docs/screenshots/01-wallet-dashboard.svg)
-
-### Add Expense
-![Add Expense](docs/screenshots/02-add-expense.svg)
-
-### Settle + Transaction Link
-![Settle + Tx Link](docs/screenshots/03-settle-tx-link.svg)
-
-## Local Run
-
-1. Build/deploy the contract from `contract/`.
-2. Set frontend env:
-   - `VITE_CONTRACT_ID`
-   - `VITE_SOROBAN_RPC_URL`
-   - `VITE_NETWORK_PASSPHRASE`
-   - `VITE_TX_EXPLORER_BASE`
-3. Run frontend:
-
-```powershell
-cd frontend
-npm.cmd install
-npm.cmd run dev
-```
-
-## Hackathon Test Script
-
-Use two Freighter testnet accounts:
-
-- `ADDR_A`
-- `ADDR_B`
-
-1. Connect as `ADDR_A`, add expense:
-   - payer: `ADDR_A`
-   - amount: `120`
-   - participants: `ADDR_A,ADDR_B`
-2. Switch wallet to `ADDR_B`, add expense:
-   - payer: `ADDR_B`
-   - amount: `30`
-   - participants: `ADDR_A,ADDR_B`
-3. Settle as `ADDR_B` to `ADDR_A`:
-   - first settle `20`
-   - then settle `25`
-
-Expected final net balances: both users return to `0`.
-
-## Deploy Frontend
-
-### Option A: Vercel
-
-```powershell
-cd frontend
-npm.cmd run build
-npx vercel login
-npx vercel --prod
-```
-
-Set env vars in Vercel project settings:
-
-- `VITE_CONTRACT_ID`
-- `VITE_SOROBAN_RPC_URL`
-- `VITE_NETWORK_PASSPHRASE`
-- `VITE_TX_EXPLORER_BASE`
-
-### Option B: Netlify
-
-```powershell
-cd frontend
-npm.cmd run build
-npx netlify login
-npx netlify deploy --prod --dir=dist
-```
-
-Set the same env vars in Netlify site settings.
->>>>>>> 9869a52 (Initial commit with frontend and contract)
+- Beginner-friendly, commented contract and frontend code.
+- No backend required.
+- Copy-paste commands for testnet flow.
+- Clean structure (`components/`, `pages/`, `utils/`) for rapid hacking.
