@@ -16,29 +16,54 @@ export default function SettleBalance({ wallet, onSettle }) {
   };
 
   return (
-    <form onSubmit={submit} className="glass-card card-hover space-y">
-      <h2>Settle Balance</h2>
-      <input
-        className="input"
-        placeholder="From (debtor)"
-        value={from}
-        onChange={(e) => setFrom(e.target.value)}
-      />
-      <input
-        className="input"
-        placeholder="To (creditor)"
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-      />
-      <input
-        className="input"
-        placeholder="Amount"
-        type="number"
-        min="1"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button className="btn btn-success btn-block">Settle via Wallet</button>
+    <form onSubmit={submit} className="cyber-card cyber-card--terminal card-hover space-y" aria-labelledby="settle-balance-title">
+      <div className="section-head">
+        <span className="section-eyebrow">OP-02 // settlement relay</span>
+        <h2 id="settle-balance-title">Settle Balance</h2>
+      </div>
+
+      <label className="field" htmlFor="settle-from">
+        <span className="field-label">From debtor</span>
+        <span className="input-shell">
+          <input
+            id="settle-from"
+            className="input"
+            placeholder="G..."
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+          />
+        </span>
+      </label>
+
+      <label className="field" htmlFor="settle-to">
+        <span className="field-label">To creditor</span>
+        <span className="input-shell">
+          <input
+            id="settle-to"
+            className="input"
+            placeholder="G..."
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+          />
+        </span>
+      </label>
+
+      <label className="field" htmlFor="settle-amount">
+        <span className="field-label">Amount</span>
+        <span className="input-shell">
+          <input
+            id="settle-amount"
+            className="input"
+            placeholder="60"
+            type="number"
+            min="1"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </span>
+      </label>
+
+      <button className="btn btn-secondary btn-block">Settle via Wallet</button>
     </form>
   );
 }

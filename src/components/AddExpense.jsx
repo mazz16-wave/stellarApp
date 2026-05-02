@@ -27,28 +27,52 @@ export default function AddExpense({ wallet, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="glass-card card-hover space-y">
-      <h2>Add Expense</h2>
-      <input
-        className="input"
-        placeholder="Payer public key"
-        value={payer}
-        onChange={(e) => setPayer(e.target.value)}
-      />
-      <input
-        className="input"
-        placeholder="Amount (i64)"
-        type="number"
-        min="1"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <textarea
-        className="input"
-        placeholder="Participants (comma-separated Stellar public keys)"
-        value={participants}
-        onChange={(e) => setParticipants(e.target.value)}
-      />
+    <form onSubmit={handleSubmit} className="cyber-card cyber-card--terminal card-hover space-y" aria-labelledby="add-expense-title">
+      <div className="section-head">
+        <span className="section-eyebrow">OP-01 // expense intake</span>
+        <h2 id="add-expense-title">Add Expense</h2>
+      </div>
+
+      <label className="field" htmlFor="payer-key">
+        <span className="field-label">Payer public key</span>
+        <span className="input-shell">
+          <input
+            id="payer-key"
+            className="input"
+            placeholder="G..."
+            value={payer}
+            onChange={(e) => setPayer(e.target.value)}
+          />
+        </span>
+      </label>
+
+      <label className="field" htmlFor="expense-amount">
+        <span className="field-label">Amount (i64)</span>
+        <span className="input-shell">
+          <input
+            id="expense-amount"
+            className="input"
+            placeholder="120"
+            type="number"
+            min="1"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </span>
+      </label>
+
+      <label className="field" htmlFor="expense-participants">
+        <span className="field-label">Participants</span>
+        <span className="input-shell input-shell--textarea">
+          <textarea
+            id="expense-participants"
+            className="input"
+            placeholder="Comma-separated Stellar public keys"
+            value={participants}
+            onChange={(e) => setParticipants(e.target.value)}
+          />
+        </span>
+      </label>
 
       <button className="btn btn-primary btn-block">Add Expense</button>
     </form>
